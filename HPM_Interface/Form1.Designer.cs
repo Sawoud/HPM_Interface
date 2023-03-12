@@ -42,6 +42,8 @@
             this.button5 = new System.Windows.Forms.Button();
             this.dataGridView2 = new System.Windows.Forms.DataGridView();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.Btn_SaveToDevice = new System.Windows.Forms.Button();
+            this.lb_loading = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.Btn__clipboard = new System.Windows.Forms.Button();
             this.label9 = new System.Windows.Forms.Label();
@@ -65,7 +67,6 @@
             this.Txt_Domain = new System.Windows.Forms.TextBox();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.lb_loading = new System.Windows.Forms.Label();
             this.tabPage2.SuspendLayout();
             this.groupBox6.SuspendLayout();
             this.groupBox5.SuspendLayout();
@@ -213,6 +214,7 @@
             // tabPage1
             // 
             this.tabPage1.BackColor = System.Drawing.Color.Azure;
+            this.tabPage1.Controls.Add(this.Btn_SaveToDevice);
             this.tabPage1.Controls.Add(this.lb_loading);
             this.tabPage1.Controls.Add(this.groupBox2);
             this.tabPage1.Controls.Add(this.groupBox1);
@@ -223,6 +225,27 @@
             this.tabPage1.Size = new System.Drawing.Size(810, 507);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Password Managment";
+            // 
+            // Btn_SaveToDevice
+            // 
+            this.Btn_SaveToDevice.Location = new System.Drawing.Point(450, 467);
+            this.Btn_SaveToDevice.Name = "Btn_SaveToDevice";
+            this.Btn_SaveToDevice.Size = new System.Drawing.Size(344, 23);
+            this.Btn_SaveToDevice.TabIndex = 18;
+            this.Btn_SaveToDevice.Text = "Save To HPMKey";
+            this.Btn_SaveToDevice.UseVisualStyleBackColor = true;
+            this.Btn_SaveToDevice.Click += new System.EventHandler(this.Btn_SaveToDevice_Click);
+            // 
+            // lb_loading
+            // 
+            this.lb_loading.AutoSize = true;
+            this.lb_loading.BackColor = System.Drawing.Color.Transparent;
+            this.lb_loading.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lb_loading.Location = new System.Drawing.Point(587, 251);
+            this.lb_loading.Name = "lb_loading";
+            this.lb_loading.Size = new System.Drawing.Size(60, 24);
+            this.lb_loading.TabIndex = 3;
+            this.lb_loading.Text = "label8";
             // 
             // groupBox2
             // 
@@ -280,7 +303,7 @@
             this.Txt_Chars.Name = "Txt_Chars";
             this.Txt_Chars.Size = new System.Drawing.Size(127, 33);
             this.Txt_Chars.TabIndex = 13;
-            this.Txt_Chars.Text = "`!@#$%^&*()_-+={[}]|\\\\:;\\\"\'<,>.?/";
+            this.Txt_Chars.Text = "`!@#$%^&*()_-+={[}]|\\\\:\\\"\'<,>.?/";
             // 
             // Txt_SopCharNum
             // 
@@ -449,7 +472,7 @@
             this.dataGridView1.Location = new System.Drawing.Point(450, 20);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ReadOnly = true;
-            this.dataGridView1.Size = new System.Drawing.Size(344, 470);
+            this.dataGridView1.Size = new System.Drawing.Size(344, 444);
             this.dataGridView1.TabIndex = 0;
             this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
             // 
@@ -462,17 +485,6 @@
             this.tabControl1.SelectedIndex = 0;
             this.tabControl1.Size = new System.Drawing.Size(818, 533);
             this.tabControl1.TabIndex = 1;
-            // 
-            // lb_loading
-            // 
-            this.lb_loading.AutoSize = true;
-            this.lb_loading.BackColor = System.Drawing.Color.Transparent;
-            this.lb_loading.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lb_loading.Location = new System.Drawing.Point(587, 251);
-            this.lb_loading.Name = "lb_loading";
-            this.lb_loading.Size = new System.Drawing.Size(60, 24);
-            this.lb_loading.TabIndex = 3;
-            this.lb_loading.Text = "label8";
             // 
             // Form1
             // 
@@ -543,6 +555,7 @@
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Button Btn__clipboard;
         private System.Windows.Forms.Label lb_loading;
+        private System.Windows.Forms.Button Btn_SaveToDevice;
     }
 }
 
