@@ -25,17 +25,14 @@ namespace HPM_Interface
     public partial class Form1 : Form
     {
         
-        SerialPort mySerialPort = new SerialPort("COM10");
+        SerialPort mySerialPort = new SerialPort("COM333");
 
 
         /*Global Values*/
         DataTable dt1 = new DataTable();
         string path = Environment.CurrentDirectory +"\\Database.txt";
-        //string path = "C:\\Users\\Sawoud\\source\\repos\\HPM_Interface\\HPM_Interface\\Database.txt";
         string pathp = Environment.CurrentDirectory + "\\PinFile.txt";
-        //string pathp = "C:\\Users\\Sawoud\\source\\repos\\HPM_Interface\\HPM_Interface\\PinFile.txt";
-        //string localfilepath = ;
-
+        string global = "";
         #region UART
         /// <summary>
         /// Intilization of the UART connection
@@ -43,21 +40,26 @@ namespace HPM_Interface
         public void UART_INIT()
         {
             /*Serial intilization*/
-            mySerialPort.BaudRate = 9600;
+            mySerialPort.BaudRate = 115200;
             mySerialPort.Parity = Parity.None;
             mySerialPort.StopBits = StopBits.One;
             mySerialPort.DataBits = 8;
             mySerialPort.Handshake = Handshake.None;
             mySerialPort.DataReceived += new SerialDataReceivedEventHandler(DataReceivedHandler);
-            mySerialPort.WriteTimeout = 500;
-            mySerialPort.ReadTimeout = 10000;
+            mySerialPort.WriteTimeout = 50000;
+            mySerialPort.ReadTimeout = 1000000;
+            mySerialPort.DtrEnable = true;
+            mySerialPort.RtsEnable = true;
+
 
         }
-        private static void DataReceivedHandler(object sender, SerialDataReceivedEventArgs e)
+        private void DataReceivedHandler(object sender, SerialDataReceivedEventArgs e)
         {
             SerialPort sp = (SerialPort)sender;
             string indata = sp.ReadExisting();
             MessageBox.Show(indata.ToString()); // just show what have been inputted for now
+            global = indata.ToString();
+
         }
         /// <summary>
         /// THe below file takes each byte of data from the device, converts it to a string, then write it to a file
@@ -69,10 +71,11 @@ namespace HPM_Interface
             int count = 0;
             
             for (int i = 0; i < 5; i++) {
-                
-                if (Convert.ToChar(mySerialPort.ReadChar()).ToString() == "+") { break; }
+                string c = Convert.ToChar(mySerialPort.ReadChar()).ToString();
+                if (c == "+") { break; }
                 if(i == 4) { return; }
             }
+            mySerialPort.Write("+");
 
             int milliseconds = 2;
             string FileString = "";
