@@ -536,7 +536,7 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.pictureBox2);
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "HPM Application";
             this.tabPage2.ResumeLayout(false);
             this.groupBox6.ResumeLayout(false);
             this.groupBox6.PerformLayout();
