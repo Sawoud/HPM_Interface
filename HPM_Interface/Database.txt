@@ -1,14 +1,9 @@
 DOMAIN;UID;PASSWORD
-Amazon;ashley87@gmail.com;grbel;
-Ebay;nivlongsd@storyday.biz;jDyLrEFT54,R(cPr5DAzYmEGzMno:`V7;
-ErinMills;keshawn45@gmail.com;superunsafe32;
-Facebook;sawoud@sawoud.com;Password123;
-Facebook;chaya.durgan@hotmail.com;KRYPTOGSNG;
-G-mail;cornell33@hotmail.com;supersafe;
+Hotmail;guoj906@hotmail.com;;
 Insta;nivlongsd@pickuplanet.com;disispas;
-Insta;forrest78@gmail.com;hi;
 Insta;forrest78@gmail.com;ozb2w0G3AeNI77DuSvX0RdNaPL46Paw(QHXr5nf\F20DrM%Y:O>DlA2LMaML>Hm7MdwwgpweQdVUhKNcGEhBcT4pKMf4byv4o2VOtmRfWxrIjgD!rJFY8l1XfHMZjyDv;
-Sorting;of;tsble;
+McMaster;Demo;@]wZ$GYK0sjo%:CIi8wzj>etUhmMG.eU;
 Spotify;fausto17@gmail.com;mushymush32;
 Work Email;mittie48@hotmail.com;testing#;
-Work Laptop;Sawoud Allos;$yeamrwhite;
+Work Laptop;Sawoud Allos;$yfstfdhiyt765b;
+Yahoo;kongf674@yahoo.com;;

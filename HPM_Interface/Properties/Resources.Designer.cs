@@ -59,5 +59,75 @@ namespace HPM_Interface.Properties {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap download_removebg_preview {
+            get {
+                object obj = ResourceManager.GetObject("download-removebg-preview", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap HPMKey_Box {
+            get {
+                object obj = ResourceManager.GetObject("HPMKey_Box", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap HPMKey_Logo_BrownYellow {
+            get {
+                object obj = ResourceManager.GetObject("HPMKey_Logo_BrownYellow", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap HPMKey_Logo_Maroon {
+            get {
+                object obj = ResourceManager.GetObject("HPMKey_Logo_Maroon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap HPMKey_Logo_MaroonInverse {
+            get {
+                object obj = ResourceManager.GetObject("HPMKey_Logo_MaroonInverse", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap HPMKey_Logo_MaroonTransparent {
+            get {
+                object obj = ResourceManager.GetObject("HPMKey_Logo_MaroonTransparent", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap HPMKey_NoBox {
+            get {
+                object obj = ResourceManager.GetObject("HPMKey_NoBox", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
     }
 }

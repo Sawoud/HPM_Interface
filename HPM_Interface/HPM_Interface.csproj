@@ -113,6 +113,13 @@
   <ItemGroup>
     <Content Include="Database.txt" />
     <Content Include="PinFile.txt" />
+    <None Include="Resources\download-removebg-preview.png" />
+    <None Include="Resources\HPMKey_NoBox.png" />
+    <None Include="Resources\HPMKey_Logo_MaroonTransparent.png" />
+    <None Include="Resources\HPMKey_Logo_MaroonInverse.png" />
+    <None Include="Resources\HPMKey_Logo_Maroon.png" />
+    <None Include="Resources\HPMKey_Logo_BrownYellow.png" />
+    <None Include="Resources\HPMKey_Box.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

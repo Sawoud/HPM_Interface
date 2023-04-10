@@ -41,6 +41,8 @@
             this.button6 = new System.Windows.Forms.Button();
             this.button5 = new System.Windows.Forms.Button();
             this.dataGridView2 = new System.Windows.Forms.DataGridView();
+            this.FP_Num = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.FP_Comm = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.Btn_SaveToDevice = new System.Windows.Forms.Button();
             this.lb_loading = new System.Windows.Forms.Label();
@@ -67,6 +69,8 @@
             this.Txt_Domain = new System.Windows.Forms.TextBox();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.tabPage2.SuspendLayout();
             this.groupBox6.SuspendLayout();
             this.groupBox5.SuspendLayout();
@@ -76,6 +80,8 @@
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.tabControl1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -174,7 +180,6 @@
             this.groupBox5.TabIndex = 0;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "groupBox5";
-            this.groupBox5.Visible = false;
             // 
             // button8
             // 
@@ -206,10 +211,24 @@
             // dataGridView2
             // 
             this.dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView2.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.FP_Num,
+            this.FP_Comm});
             this.dataGridView2.Location = new System.Drawing.Point(6, 19);
             this.dataGridView2.Name = "dataGridView2";
+            this.dataGridView2.RowHeadersWidth = 40;
             this.dataGridView2.Size = new System.Drawing.Size(374, 247);
             this.dataGridView2.TabIndex = 0;
+            // 
+            // FP_Num
+            // 
+            this.FP_Num.HeaderText = "Finger Print Number";
+            this.FP_Num.Name = "FP_Num";
+            // 
+            // FP_Comm
+            // 
+            this.FP_Comm.HeaderText = "Finger Print Comments";
+            this.FP_Comm.Name = "FP_Comm";
             // 
             // tabPage1
             // 
@@ -486,14 +505,36 @@
             this.tabControl1.Size = new System.Drawing.Size(818, 533);
             this.tabControl1.TabIndex = 1;
             // 
+            // pictureBox2
+            // 
+            this.pictureBox2.Image = global::HPM_Interface.Properties.Resources.download_removebg_preview;
+            this.pictureBox2.Location = new System.Drawing.Point(185, 616);
+            this.pictureBox2.Name = "pictureBox2";
+            this.pictureBox2.Size = new System.Drawing.Size(445, 110);
+            this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.pictureBox2.TabIndex = 3;
+            this.pictureBox2.TabStop = false;
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = global::HPM_Interface.Properties.Resources.HPMKey_Logo_MaroonTransparent;
+            this.pictureBox1.Location = new System.Drawing.Point(207, 12);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(445, 87);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox1.TabIndex = 2;
+            this.pictureBox1.TabStop = false;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.LightCyan;
-            this.ClientSize = new System.Drawing.Size(884, 661);
+            this.ClientSize = new System.Drawing.Size(884, 738);
+            this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.label1);
+            this.Controls.Add(this.pictureBox2);
             this.Name = "Form1";
             this.Text = "Form1";
             this.tabPage2.ResumeLayout(false);
@@ -509,6 +550,8 @@
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.tabControl1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -556,6 +599,10 @@
         private System.Windows.Forms.Button Btn__clipboard;
         private System.Windows.Forms.Label lb_loading;
         private System.Windows.Forms.Button Btn_SaveToDevice;
+        private System.Windows.Forms.DataGridViewTextBoxColumn FP_Num;
+        private System.Windows.Forms.DataGridViewTextBoxColumn FP_Comm;
+        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.PictureBox pictureBox2;
     }
 }
 

@@ -18,18 +18,22 @@ using System.Diagnostics;
 using static System.Net.Mime.MediaTypeNames;
 using System.Threading;
 using System.Security.Cryptography;
+using System.Data.Common;
 
 namespace HPM_Interface
 {
     public partial class Form1 : Form
     {
         
-        SerialPort mySerialPort = new SerialPort("COM3");
+        SerialPort mySerialPort = new SerialPort("COM10");
 
 
         /*Global Values*/
         DataTable dt1 = new DataTable();
-        string path = Path.GetPathRoot(Environment.SystemDirectory)+"Database.txt";
+        string path = Environment.CurrentDirectory +"\\Database.txt";
+        //string path = "C:\\Users\\Sawoud\\source\\repos\\HPM_Interface\\HPM_Interface\\Database.txt";
+        string pathp = Environment.CurrentDirectory + "\\PinFile.txt";
+        //string pathp = "C:\\Users\\Sawoud\\source\\repos\\HPM_Interface\\HPM_Interface\\PinFile.txt";
         //string localfilepath = ;
 
         #region UART
@@ -39,41 +43,42 @@ namespace HPM_Interface
         public void UART_INIT()
         {
             /*Serial intilization*/
-            mySerialPort.BaudRate = 115200;
+            mySerialPort.BaudRate = 9600;
             mySerialPort.Parity = Parity.None;
             mySerialPort.StopBits = StopBits.One;
             mySerialPort.DataBits = 8;
             mySerialPort.Handshake = Handshake.None;
-
+            mySerialPort.DataReceived += new SerialDataReceivedEventHandler(DataReceivedHandler);
             mySerialPort.WriteTimeout = 500;
+            mySerialPort.ReadTimeout = 10000;
 
+        }
+        private static void DataReceivedHandler(object sender, SerialDataReceivedEventArgs e)
+        {
+            SerialPort sp = (SerialPort)sender;
+            string indata = sp.ReadExisting();
+            MessageBox.Show(indata.ToString()); // just show what have been inputted for now
         }
         /// <summary>
         /// THe below file takes each byte of data from the device, converts it to a string, then write it to a file
         /// </summary>
         public void UART_File_Read() {
-            DataRow newRow = dt1.NewRow();
-            newRow[0] = Txt_Domain.Text.ToString();
-            newRow[1] = Text_UID.Text.ToString();
-            newRow[2] = Text_Password.Text.ToString();
-            dt1.Rows.Add(newRow);
+
             string textt = "";
-            lb_loading.Show();
             Boolean first_line = true;
-            int count = 0; 
-            mySerialPort.Write("+");
+            int count = 0;
+            
             for (int i = 0; i < 5; i++) {
+                
                 if (Convert.ToChar(mySerialPort.ReadChar()).ToString() == "+") { break; }
                 if(i == 4) { return; }
             }
 
             int milliseconds = 2;
-            //Thread.Sleep(milliseconds);
             string FileString = "";
+            lb_loading.Show();
             while (true)
             {
-                //mySerialPort.Write("send");
-                //Thread.Sleep(milliseconds);
                 try
                 {
                     textt = Convert.ToChar(mySerialPort.ReadChar()).ToString(); // Wait for data reception
@@ -84,9 +89,9 @@ namespace HPM_Interface
                     mySerialPort.Close();
                     Environment.Exit(0);
                 }
-                FileString = FileString + textt;
+                FileString = FileString + DecryptTextS(textt);
 
-                lb_loading.Text = "loading to " + count;
+                lb_loading.Text = "loading Byte Number : " + count +" To HPMKey";
             }
             File.WriteAllText(path, FileString);
             lb_loading.Hide();
@@ -98,9 +103,9 @@ namespace HPM_Interface
         /// </summary>
         public void UART_Send_Lines()
         {
-            //mySerialPort.Open();
             int milliseconds = 1;
-            mySerialPort.Write("-");
+            try { mySerialPort.Write("-"); }
+            catch { return; }
             for (int i = 0; i < 5; i++)
             {
                 if (Convert.ToChar(mySerialPort.ReadChar()).ToString() == "-") { break; }
@@ -109,10 +114,8 @@ namespace HPM_Interface
             byte[] FileBytes = System.IO.File.ReadAllBytes(path);
                 for (int i = 0; i < FileBytes.Length; i++)
                 {
-                //Thread.Sleep(milliseconds);
-                mySerialPort.Write(Convert.ToChar(FileBytes[i]).ToString());
+                mySerialPort.Write(EncryptTextS(Convert.ToChar(FileBytes[i])).ToString());
             }
-            //Thread.Sleep(milliseconds);
             mySerialPort.Write("*");
             dt1.Rows.Clear();
             read_file();
@@ -122,11 +125,11 @@ namespace HPM_Interface
 
         public Boolean pin_check() {
             mySerialPort.Write("P");
-            for (int i = 0; i < 5; i++)
-            {
-                if (Convert.ToChar(mySerialPort.ReadChar()).ToString() == "P") { break; }
-                if (i == 4) { return false; }
-            }
+            //for (int i = 0; i < 5; i++)
+            //{
+            //    if (Convert.ToChar(mySerialPort.ReadChar()).ToString() == "P") { break; }
+            //    if (i == 4) { return false; }
+            //}
             if (Convert.ToChar(mySerialPort.ReadChar()).ToString() == "1") { return true; }
             else { return false; }
             
@@ -137,7 +140,8 @@ namespace HPM_Interface
             InitializeComponent();
             try { mySerialPort.Open(); }catch { }
             this.dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            UART_INIT();
+            try { UART_INIT(); } catch { }
+            ColInit();
 
             read_file();
             lb_loading.Hide();
@@ -146,7 +150,7 @@ namespace HPM_Interface
 
             try { UART_File_Read(); }
             catch { }
-            foreach (string line in File.ReadAllLines(path))
+            foreach (string line in File.ReadAllLines(pathp))
             {
                 string[] pin = line.Split(';');
                 txt_oldPin.Text = pin[0].ToString();
@@ -154,8 +158,6 @@ namespace HPM_Interface
             this.dataGridView1.Columns["PASSWORD"].Visible = false;
             this.dataGridView1.Columns[0].Width = 120;
             this.dataGridView1.Columns[1].Width = 180;
-            dataGridView1.Rows.RemoveAt(0);
-
         }
         /// <summary>
         /// This reads the CSV dile stored on the desktop
@@ -185,13 +187,13 @@ namespace HPM_Interface
 
                     string[] data = line.Split(';');
 
-                    for (int i = 0; i < data.Length; i++)
+                    for (int i = 0; i < data.Length-1; i++)
                     {
                         try { dr[i] = data[i]; }
                         catch { }
                     }
-                    if ((dr[0] == ";") || (dr[0] == "") || (dr[0] == "*")) { }
-                    else { dt1.Rows.Add(dr); }
+                    //if ((dr[0] == ";") || (dr[0] == "") || (dr[0] == "*")) { }
+                      dt1.Rows.Add(dr);
                 }
             }
         }
@@ -289,7 +291,26 @@ namespace HPM_Interface
 
             return result;
         }
-
+        public string EncryptTextS(char pass) {
+            string encrypt="";
+            int key = 4;
+            //for (int i = 0; i < pass.Length; i++)
+            //{
+            //    encrypt += ((char)pass[i] + key).ToString();
+            //}
+            //return encrypt;
+            return (pass + key).ToString();
+        }
+        public string DecryptTextS(string pass)
+        {
+            string decrypt = "";
+            int key = 4;
+            //for (int i = 0; i < pass.Length; i++)
+            //{
+            //    decrypt += ((char)pass[i] - key).ToString();
+            //}
+            return ((pass.ToCharArray())[0] - key).ToString();
+        }
         public string DecryptText(string password)
         {
             // Get the bytes of the string
@@ -325,13 +346,22 @@ namespace HPM_Interface
              byte[] writeBuffer = File.ReadAllBytes("filename.txt");
              port.Write(writeBuffer, 0, writeBuffer.Length);
              */
-            try { UART_Send_Lines(); }
-            catch { }
             read_file();
             dataGridView1.Refresh();
             this.dataGridView1.Sort(this.dataGridView1.Columns["DOMAIN"], ListSortDirection.Ascending);
         }
-
+        private void ColInit()
+        {
+            DataGridViewColumn columnfpnum = dataGridView2.Columns[0];
+            DataGridViewColumn columnfpdesc = dataGridView2.Columns[1];
+            this.dataGridView2.Rows.Add("FP 1", "Left Index");
+            this.dataGridView2.Rows.Add("FP 2", "Left Thumb");
+            this.dataGridView2.Rows.Add("FP 3", "Left Pinkey");
+            this.dataGridView2.Rows.Add("FP 4", "Right Index");
+            this.dataGridView2.Rows.Add("FP 5", "Right Thumb");
+            this.dataGridView2.Rows.Add("FP 6", "Right Pinkey");
+            columnfpnum.Width = columnfpdesc.Width = 165;
+        }
         private void Btn_Edit_Click(object sender, EventArgs e)
         {
             string message = "Are you sure you want to edit the selected row? \nThis action can not be undone";
@@ -397,16 +427,43 @@ namespace HPM_Interface
             }
             
             catch { special_char_locations[0] = -1;}
-            
-            for (int i = 0; i < Int32.Parse(Txt_PassLen.Text.ToString()); i++) {
-                for (int j = 0; j < special_char_locations.Length; j++) {
-                    if (special_char_locations[j] == i) { match = true; break; }
-                    else { };
+            try
+            {
+                for (int i = 0; i < Int32.Parse(Txt_PassLen.Text.ToString()); i++)
+                {
+                    for (int j = 0; j < special_char_locations.Length; j++)
+                    {
+                        if (special_char_locations[j] == i) { match = true; break; }
+                        else { };
+                    }
+                    if (match)
+                    {
+                        randompass += special_charchters[random.Next(0, special_charchters.Length - 1)];
+                    }
+                    else { randompass += charchters[random.Next(0, charchters.Length - 1)]; }
+                    match = false;
                 }
-                if (match) { 
-                    randompass += special_charchters[random.Next(0, special_charchters.Length - 1)]; }
-                else { randompass += charchters[random.Next(0, charchters.Length - 1)]; }
-                match = false;
+            }
+            catch
+            {
+                for (int i = 0; i < 32; i++)
+                {
+                    for (int j = 0; j < 5; j++)
+                    {
+                        try
+                        {
+                            if (special_char_locations[j] == i) { match = true; break; }
+                            else { };
+                        }
+                        catch { }
+                    }
+                    if (match)
+                    {
+                        randompass += special_charchters[random.Next(0, special_charchters.Length - 1)];
+                    }
+                    else { randompass += charchters[random.Next(0, charchters.Length - 1)]; }
+                    match = false;
+                }
             }
             Txt_GenPass.Text = randompass;
         }
@@ -425,23 +482,13 @@ namespace HPM_Interface
                     Text_UID.Text = row.Cells["UID"].Value.ToString();
                     Text_Password.Text = row.Cells["PASSWORD"].Value.ToString();
                 }
-                else
-                {
-                    MessageBox.Show("PIN Entry Failed/Terminated");
-                }
             }
-            catch { }
-            /*
-            if (PIN == "7531") {
+            catch {
+                MessageBox.Show("Login Successful !");
                 Txt_Domain.Text = row.Cells["DOMAIN"].Value.ToString();
                 Text_UID.Text = row.Cells["UID"].Value.ToString();
                 Text_Password.Text = row.Cells["PASSWORD"].Value.ToString();
             }
-            else {
-                MessageBox.Show("PIN Entry Failed/Terminated");
-            }
-
-             */
 
         }
 
@@ -466,7 +513,15 @@ namespace HPM_Interface
 
         private void Btn_SaveToDevice_Click(object sender, EventArgs e)
         {
-            UART_Send_Lines();
+            try { UART_Send_Lines(); }
+            catch {
+            }
+            Thread.Sleep(2500);
+            MessageBox.Show("Successfully Saved Changes !");
+            dataGridView1.Refresh();
+            this.dataGridView1.Sort(this.dataGridView1.Columns["DOMAIN"], ListSortDirection.Ascending);
+
+
         }
     }
 }
